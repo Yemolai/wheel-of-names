@@ -9,7 +9,7 @@ const app = document.querySelector('#app');
 const wheel = app.querySelector('.wheel');
 const listOfNames = app.querySelector('ul#names-list');
 const namesTextarea = app.querySelector('textarea#names');
-const spinButton = app.querySelector('button');
+const spinButton = app.querySelector('button#spin-action');
 
 let placeholderNames = ['John', 'Jane', 'Joey', 'Fernando', 'Paul'];
 
@@ -20,7 +20,10 @@ function generateRandomWithin(min, max, resolution = 2) {
   const rng = new Random(browserCryptoEngine);
   const factor = Math.pow(10, Math.round(Math.abs(resolution)));
   const randomValue = rng.realZeroToOneInclusive();
-  return Math.round((min + (randomValue * (max - min))) * factor) / factor;
+  return Math.round(
+    (min + (randomValue * (max - min)))
+    * factor
+  ) / factor;
 }
 
 function updateNamesList(event) {
@@ -88,8 +91,6 @@ spinButton.addEventListener('click', () => {
     spinButton.disabled = false;
     wheel.setAttribute('style', `--spin-start-angle: ${targetPoint}`);
     wheel.classList.remove(WHEEL_ACTION_CLASS);
-    console.log('done spinning');
-    console.log('new starting point:', targetPoint);
   }, (duration + 1) * 1000);
 });
 

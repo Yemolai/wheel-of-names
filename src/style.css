@@ -19,6 +19,10 @@ body {
   grid-area: header;
 }
 
+.grid-header h1 {
+  font-size: 1.2em;
+}
+
 #app .grid-wheel {
   grid-area: wheel;
   display: flex;
@@ -97,7 +101,7 @@ body {
   rotate: calc(90deg + calc(360deg * var(--translations, 2)) + calc(1deg * var(--spin-final-angle, 0)));
   transition-duration: calc(1s * var(--spin-duration, 4));
   transition-property: rotate;
-  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  transition-timing-function: cubic-bezier(.11,1.18,.84,1);
 }
 
 .wheel ul li {

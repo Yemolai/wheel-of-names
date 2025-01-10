@@ -9,7 +9,9 @@
   <body>
     <div id="app">
       <div class="grid-header">
-        Wheel of names
+        <h1>
+          <strong>Wheel of names</strong>
+        </h1>
       </div>
       <div class="grid-wheel">
         <fieldset class="wheel">
@@ -23,7 +25,19 @@
       </div>
       <div class="grid-input">
         <textarea id="names"></textarea>
-        <button type="button" id="spin-action">Spin!</button>
+        <div class="actions-row">
+          <button type="button" id="shuffle-action">Shuffle</button>
+          <button type="button" id="spin-action">Spin!</button>
+        </div>
+        <br/>
+        <strong>Settings</strong>
+        <div class="settings-row">
+          <label>
+            <input type="checkbox">
+            <span>Weighted spin</span>
+            <div><small>Reduces the chances of previously winners at each win</small></div>
+          </label>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.js"></script>
