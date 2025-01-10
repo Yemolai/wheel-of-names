@@ -1,0 +1,121 @@
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, sans-serif;
+}
+
+#app {
+  width: 100%;
+  height: calc(100vh - 24px);
+  display: grid;
+  grid-template-rows: 24px auto;
+  grid-template-columns: auto 25vw;
+  grid-template-areas:
+    "header header"
+    "wheel input";
+  gap: 0.5rem 0.6rem;
+}
+
+#app .grid-header {
+  grid-area: header;
+}
+
+#app .grid-wheel {
+  grid-area: wheel;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.grid-wheel .wheel-container {
+  width: 100%;
+}
+
+#app .grid-input {
+  grid-area: input;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.grid-input textarea#names {
+  height: 70%;
+  max-height: 70vh;
+}
+
+.wheel {
+  all: unset;
+  aspect-ratio: 1 / 1;
+  background: crimson;
+  background: transparent;
+  container-type: inline-size;
+  direction: ltr;
+  display: grid;
+  position: relative;
+  place-content: center start;
+}
+
+.wheel::after {
+  aspect-ratio: 1/cos(30deg);
+  background-color: red;
+  clip-path: polygon(50% 100%,100% 0,0 0);
+  content: "";
+  height: 4cqi;
+  position: absolute;
+  place-self: start center;
+  scale: 1.4;
+  z-index: 2;
+}
+
+.wheel > * {
+  position: absolute;
+}
+
+.wheel ul {
+  position: absolute;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  clip-path: inset(0 0 0 0 round 50%);
+  aspect-ratio: 1 / 1;
+  inset: 0;
+  place-content: center start;
+}
+
+.wheel ul li {
+  align-content: center;
+  aspect-ratio: 1 / calc(2 * tan(180deg / var(--_items)));
+  background: hsl(calc(360deg / var(--_items) * calc(var(--_idx))), 100%, 75%);
+  box-shadow: inset 8px 0px 2.6em rgba(80, 80, 80, 0.28);
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  display: grid;
+  font-size: 4cqi;
+  grid-area: 1 / -1;
+  padding-left: 1ch;
+  rotate: calc(360deg / var(--_items) * calc(var(--_idx) - 1));
+  transform-origin: center right;
+  user-select: none;
+  width: 50cqi;
+}
+
+.wheel ul li::before, .wheel ul li::after {
+  aspect-ratio: 1/cos(15deg);
+  background-color: goldenrod;
+  border: solid 1px gold;
+  border-radius: 100%;
+  content: "";
+  height: 2cqi;
+  position: absolute;
+  top: -1px;
+  left: 5%;
+  scale: 1;
+  z-index: 2;
+}
+
+.wheel ul li::after {
+  top: unset;
+  bottom: -1px;
+}
