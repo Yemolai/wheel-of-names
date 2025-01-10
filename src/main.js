@@ -1,14 +1,25 @@
+import { Random, browserCrypto as browserCryptoEngine } from 'random-js'
 import './style.css'
 // import javascriptLogo from './javascript.svg'
 // import viteLogo from '/vite.svg'
 
 const app = document.querySelector('#app');
+const wheel = app.querySelector('.wheel');
 const listOfNames = app.querySelector('ul#names-list');
 const namesTextarea = app.querySelector('textarea#names');
+const spinButton = app.querySelector('button');
 
-let placeholderNames = ['John', 'Jane', 'Joey', 'Steph', 'Paul'];
+let placeholderNames = ['John', 'Jane', 'Joey', 'Fernando', 'Paul'];
 
 let namesList = placeholderNames;
+let spinning = false;
+
+function generateRandomWithin(from, to, resolution = 2) {
+  const rng = new Random(browserCryptoEngine);
+  const factor = Math.pow(10, Math.round(Math.abs(resolution)));
+  const randomValue = rng.realZeroToOneInclusive();
+  return Math.round((from + (randomValue * (to - from))) * factor) / factor;
+}
 
 function updateNamesList(event) {
   const field = event.target;
@@ -42,10 +53,42 @@ function updateNamesList(event) {
   listOfNames.setAttribute('style', `--_items: ${namesList.length};`)
 }
 
+function forceUpdateNamesList() {
+  updateNamesList({ target: namesTextarea });
+}
+
 namesTextarea.addEventListener('keyup', updateNamesList);
 namesTextarea.addEventListener('paste', updateNamesList);
 
-window.addEventListener('DOMContentLoaded', () => {
-  updateNamesList({ target: namesTextarea });
-})
+spinButton.addEventListener('click', () => {
+  if (spinning) return false;
+  spinning = true;
+  spinButton.disabled = true;
 
+  forceUpdateNamesList();
+  // const names = [...namesList];
+  const duration = generateRandomWithin(3, 6);
+  const startingPoint = generateRandomWithin(0, 360);
+  const targetPoint = generateRandomWithin(0, 360);
+  wheel.setAttribute('style', [
+    ['spin-duration', duration],
+    ['spin-start-angle', startingPoint],
+    ['spin-final-angle', targetPoint]
+  ]
+    .map(([key, value]) => `--${key}: ${value}`)
+    .join(';')
+  );
+  wheel.classList.add('spin');
+
+  setTimeout(() => {
+    spinning = false;
+    spinButton.disabled = false;
+    wheel.setAttribute('style', `--spin-start-angle: ${targetPoint}`);
+    wheel.classList.remove('spin');
+  }, (duration + 1) * 1000);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  namesTextarea.value = placeholderNames.join('\n');
+  forceUpdateNamesList();
+});

@@ -38,7 +38,7 @@ body {
 }
 
 .grid-input textarea#names {
-  height: 70%;
+  height: 50%;
   max-height: 70vh;
 }
 
@@ -76,7 +76,7 @@ body {
   position: absolute;
 }
 
-.wheel ul {
+.wheel ul#names-list {
   position: absolute;
   display: grid;
   margin: 0;
@@ -85,11 +85,18 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  rotate: 90deg;
+  rotate: calc(90deg + calc(1deg * var(--spin-start-angle, 0)));
   clip-path: inset(0 0 0 0 round 50%);
   aspect-ratio: 1 / 1;
   inset: 0;
   place-content: center start;
+}
+
+.wheel.spin ul#names-list {
+  rotate: calc(990deg + calc(1deg * var(--spin-final-angle, 0)));
+  transition-duration: calc(1s * var(--spin-duration, 4));
+  transition-property: rotate;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .wheel ul li {
