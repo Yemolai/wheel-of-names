@@ -3,6 +3,8 @@ import './style.css'
 // import javascriptLogo from './javascript.svg'
 // import viteLogo from '/vite.svg'
 
+const WHEEL_ACTION_CLASS = 'spinning';
+
 const app = document.querySelector('#app');
 const wheel = app.querySelector('.wheel');
 const listOfNames = app.querySelector('ul#names-list');
@@ -14,11 +16,11 @@ let placeholderNames = ['John', 'Jane', 'Joey', 'Fernando', 'Paul'];
 let namesList = placeholderNames;
 let spinning = false;
 
-function generateRandomWithin(from, to, resolution = 2) {
+function generateRandomWithin(min, max, resolution = 2) {
   const rng = new Random(browserCryptoEngine);
   const factor = Math.pow(10, Math.round(Math.abs(resolution)));
   const randomValue = rng.realZeroToOneInclusive();
-  return Math.round((from + (randomValue * (to - from))) * factor) / factor;
+  return Math.round((min + (randomValue * (max - min))) * factor) / factor;
 }
 
 function updateNamesList(event) {
@@ -70,21 +72,24 @@ spinButton.addEventListener('click', () => {
   const duration = generateRandomWithin(3, 6);
   const startingPoint = generateRandomWithin(0, 360);
   const targetPoint = generateRandomWithin(0, 360);
+
   wheel.setAttribute('style', [
+    ['spin-final-angle', targetPoint],
     ['spin-duration', duration],
     ['spin-start-angle', startingPoint],
-    ['spin-final-angle', targetPoint]
   ]
     .map(([key, value]) => `--${key}: ${value}`)
     .join(';')
   );
-  wheel.classList.add('spin');
+  wheel.classList.add(WHEEL_ACTION_CLASS);
 
   setTimeout(() => {
     spinning = false;
     spinButton.disabled = false;
     wheel.setAttribute('style', `--spin-start-angle: ${targetPoint}`);
-    wheel.classList.remove('spin');
+    wheel.classList.remove(WHEEL_ACTION_CLASS);
+    console.log('done spinning');
+    console.log('new starting point:', targetPoint);
   }, (duration + 1) * 1000);
 });
 
