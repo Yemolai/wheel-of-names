@@ -57,12 +57,17 @@ body {
 .wheel::after {
   aspect-ratio: 1/cos(30deg);
   background-color: red;
+  box-shadow: inset 8px 0 0.2rem rgba(200, 28, 28, 0.8);
   clip-path: polygon(50% 100%,100% 0,0 0);
+  border: solid 0.6px rgba(108, 14, 14, 0.8);
+  border-radius: 60%;
   content: "";
-  height: 4cqi;
+  height: 3cqi;
   position: absolute;
+  transform-origin: center top;
   place-self: start center;
-  scale: 1.4;
+  margin-top: -1.6rem;
+  scale: 1 2.8;
   z-index: 2;
 }
 
@@ -103,13 +108,13 @@ body {
 
 .wheel ul li::before, .wheel ul li::after {
   aspect-ratio: 1/cos(15deg);
-  background-color: goldenrod;
-  border: solid 1px gold;
+  background: radial-gradient(closest-side, gold, #fdff8f, goldenrod);
+  border: solid 0.5px rgba(0, 0, 0, 0.4);
   border-radius: 100%;
   content: "";
   height: 2cqi;
   position: absolute;
-  top: -1px;
+  top: -0.5px;
   left: 5%;
   scale: 1;
   z-index: 2;
@@ -117,5 +122,5 @@ body {
 
 .wheel ul li::after {
   top: unset;
-  bottom: -1px;
+  bottom: -0.5px;
 }
