@@ -3,6 +3,36 @@ body {
   font-family: system-ui, sans-serif;
 }
 
+dialog .dialog-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+dialog .dialog-title h2 {
+  margin-top: 0;
+}
+
+dialog .dialog-title .dialog-modal-actions {
+  margin-top: -12px;
+  margin-right: -8px;
+  margin-bottom: 4px;
+  margin-left: 12px;
+  place-self: flex-start auto;
+}
+
+dialog .dialog-title .dialog-modal-actions > button {
+  cursor: pointer;
+}
+
+dialog .dialog-title .close-dialog {
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 2px;
+}
+
 #app {
   width: 100%;
   height: calc(100vh - 24px);

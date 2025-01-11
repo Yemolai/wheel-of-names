@@ -3,6 +3,7 @@ import './style.css'
 // import javascriptLogo from './javascript.svg'
 // import viteLogo from '/vite.svg'
 
+const STORAGE_KEY = 'names-list';
 const WHEEL_ACTION_CLASS = 'spinning';
 
 const app = document.querySelector('#app');
@@ -10,6 +11,44 @@ const wheel = app.querySelector('.wheel');
 const listOfNames = app.querySelector('ul#names-list');
 const namesTextarea = app.querySelector('textarea#names');
 const spinButton = app.querySelector('button#spin-action');
+const winnerDialog = app.querySelector('dialog#winner-dialog');
+
+document.querySelectorAll('dialog').forEach((dialog) => {
+  const closeDialogButtons = dialog.querySelectorAll('button.close-dialog');
+  function closeDialog() {
+    if (dialog.open) {
+      dialog.close();
+    }
+  }
+  closeDialogButtons.forEach((closeDialogButton) => {
+    closeDialogButton.addEventListener('click', () => closeDialog());
+  });
+});
+
+function renderWinnerName(name) {
+  document.querySelector('dialog#winner-name').innerText = name;
+}
+
+function loadFromLocalStorage(fallbackValue = []) {
+  try {
+    if (!localStorage || !localStorage.getItem) {
+      throw new Error('Cannot access LocalStorage');
+    }
+    const serialized = localStorage.getItem(STORAGE_KEY);
+    return JSON.parse(serialized);
+  } catch (error) {
+    console.error('failed to load from local storage', error);
+    return fallbackValue;
+  }
+}
+
+function saveToLocalStorage(namesList) {
+  if (!localStorage || !localStorage.setItem) {
+    return alert('Do not have access to LocalStorage. Can\' save the list.');
+  }
+  const serialized = JSON.stringify(namesList);
+  localStorage.setItem(STORAGE_KEY, serialized);
+}
 
 let placeholderNames = ['John', 'Jane', 'Joey', 'Fernando', 'Paul'];
 
@@ -87,6 +126,7 @@ spinButton.addEventListener('click', () => {
   wheel.classList.add(WHEEL_ACTION_CLASS);
 
   setTimeout(() => {
+
     spinning = false;
     spinButton.disabled = false;
     wheel.setAttribute('style', `--spin-start-angle: ${targetPoint}`);
